@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('users', UserController::class);
     Route::resource('obat', ObatController::class);
+    Route::get('obat.report', [ObatController::class, 'cetakpdf'])->name('obat.report');
     Route::resource('bahanbaku', BahanbakuController::class);
     Route::resource('supplier', SupplierController::class);
     Route::resource('gudang', GudangController::class);

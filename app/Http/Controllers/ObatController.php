@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Obat;
 use Illuminate\Http\Request;
+use PDF;
 
 class ObatController extends Controller
 {
@@ -83,5 +84,13 @@ class ObatController extends Controller
     $obat->delete();
 
     return redirect()->route('obat.index')->with('success', 'Obat deleted successfully.');
+    }
+
+    public function cetakpdf()
+    {
+    	$dataobat = Obat::all();
+ 
+    	$pdf = PDF::loadview('obat.report',['dataobat'=>$dataobat]);
+    	return $pdf->stream('laporan-obat-pdf');
     }
 }
