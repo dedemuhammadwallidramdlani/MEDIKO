@@ -11,6 +11,7 @@ use App\Http\Controllers\EkstraksiController;
 use App\Http\Controllers\PencampuranController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\LaporanController;
+use App\Exports\UsersExport;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,7 +25,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    Route::get('users.excel', [UserController::class, 'export'])->name('users.excel');
     Route::resource('users', UserController::class);
+
     Route::resource('obat', ObatController::class);
     Route::get('obat.report', [ObatController::class, 'cetakpdf'])->name('obat.report');
     Route::resource('bahanbaku', BahanbakuController::class);
