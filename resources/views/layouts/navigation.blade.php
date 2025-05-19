@@ -42,9 +42,9 @@
         <a href="{{ route('supplier.index') }}" class="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
             Supplier
         </a>
-        <a href="{{ route('gudang.index') }}" class="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+        <!-- <a href="{{ route('gudang.index') }}" class="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
             Gudang
-        </a>
+        </a> -->
     </div>
 
     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">

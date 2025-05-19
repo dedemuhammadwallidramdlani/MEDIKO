@@ -12,6 +12,7 @@ use App\Http\Controllers\PencampuranController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\LaporanController;
 use App\Exports\UsersExport;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -38,6 +39,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('pencampuran', PencampuranController::class);
     Route::resource('transaksi', TransaksiController::class);
     Route::resource('laporan', LaporanController::class);
+
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 });
 
 require __DIR__.'/auth.php';
