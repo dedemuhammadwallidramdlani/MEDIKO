@@ -10,7 +10,6 @@ use App\Http\Controllers\GudangController;
 use App\Http\Controllers\EkstraksiController;
 use App\Http\Controllers\PencampuranController;
 use App\Http\Controllers\TransaksiController;
-use App\Http\Controllers\LaporanController;
 use App\Exports\UsersExport;
 use App\Http\Controllers\DashboardController;
 
@@ -38,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('ekstraksi', EkstraksiController::class);
     Route::resource('pencampuran', PencampuranController::class);
     Route::resource('transaksi', TransaksiController::class);
-    Route::resource('laporan', LaporanController::class);
+    Route::get('/laporan', [TransaksiController::class, 'index'])->name('laporan.index');
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

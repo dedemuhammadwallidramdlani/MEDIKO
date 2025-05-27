@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Data Laporan') }}
+            {{ __('Laporan') }}
         </h2>
     </x-slot>
     <div class="py-12">
@@ -10,13 +10,13 @@
                 <div class="mx-auto py-4 px-4 sm:px-6 lg:px-8 text-gray-900 dark:text-gray-100">
                     <div class="flex items-center justify-between py-5 mb-5">
                         <div class="md:mt-0 sm:flex-none w-72">
-                            <form action="{{ route('laporan.index') }}" method="GET">
+                            <form action="{{ route('transaksi.index') }}" method="GET">
                                 <input type="text" name="search" placeholder="Cari..."
                                     class="w-full relative inline-flex items-center px-4 py-2 font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300" />
                             </form>
                         </div>
                         <div class="sm:ml-16 sm:mt-0 sm:flex-none">
-                            <a type="button" href="{{ route('laporan.create') }}"
+                            <a type="button" href="{{ route('transaksi.create') }}"
                                 class="relative inline-flex items-center px-4 py-2 font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300">
                                 Add New
                             </a>
@@ -30,13 +30,16 @@
                                         <span>No</span>
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-center">
-                                        <span>Judul</span>
+                                        <span>Nama Obat</span>
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-center">
-                                        <span>Isi</span>
+                                        <span>Jumlah</span>
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-center">
-                                        <span>Tanggal laporan</span>
+                                        <span>Tanggal Transaksi</span>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-center">
+                                        <span>Total Harga</span>
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-center">
                                         <span>Aksi</span>
@@ -45,25 +48,28 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $i = ($laporan->currentPage() - 1) * $laporan->perPage() + 1;
+                                    $i = ($transaksi->currentPage() - 1) * $transaksi->perPage() + 1;
                                 @endphp
-                                @forelse($laporan as $item) {{-- Ganti $laporan menjadi $item --}}
+                                @forelse($transaksi as $item) {{-- Ganti $transaksi menjadi $item --}}
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                         <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
                                             {{ $i++ }}
                                         </td>
                                         <td class="px-6 py-2 text-center">
-                                            {{ $item->judul }} {{-- Ganti $laporan menjadi $item --}}
+                                            {{ $item->obat_id }} {{-- Ganti $transaksi menjadi $item --}}
                                         </td>
                                         <td class="px-6 py-2 text-center">
-                                            {{ $item->isi }} {{-- Ganti $laporan menjadi $item --}}
+                                            {{ $item->jumlah }} {{-- Ganti $transaksi menjadi $item --}}
                                         </td>
                                         <td class="px-6 py-2 text-center">
-                                            {{ $item->tanggal_laporan }} {{-- Ganti $laporan menjadi $item --}}
+                                            {{ $item->tanggal_transaksi }} {{-- Ganti $transaksi menjadi $item --}}
                                         </td>
                                         <td class="px-6 py-2 text-center">
-                                            <form id="delete-form-{{ $item->id }}" action="{{ route('laporan.destroy', $item->id) }}" method="POST">
-                                                <a href="{{ route('laporan.edit', $item->id) }}" class="focus:outline-none text-gray-50 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-xs px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900">Edit</a>
+                                            {{ $item->total_harga }} {{-- Ganti $transaksi menjadi $item --}}
+                                        </td>
+                                        <td class="px-6 py-2 text-center">
+                                            <form id="delete-form-{{ $item->id }}" action="{{ route('transaksi.destroy', $item->id) }}" method="POST">
+                                                <a href="{{ route('transaksi.edit', $item->id) }}" class="focus:outline-none text-gray-50 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-xs px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900">Edit</a>
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" onclick="confirmDelete({{ $item->id }})" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Hapus</button>
@@ -78,7 +84,7 @@
                             </tbody>
                         </table>
                         <div class="relative p-3">
-                            {{ $laporan->links() }} {{-- Pastikan ini di luar loop --}}
+                            {{ $transaksi->links() }} {{-- Pastikan ini di luar loop --}}
                         </div>
                     </div>
                 </div>
